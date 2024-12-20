@@ -5,22 +5,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApp.Pages;
 
-public class IndexModel : PageModel
+public class CreateQuestionnaire : PageModel
 {
     private readonly AppDbContext _context;
     
-    [BindProperty(SupportsGet = true)] public string? Search { get; set; }
-    public List<Questionnaire> Questionnaires { get; set; } = new();
     [BindProperty(SupportsGet = true)] public string? Message { get; set; }
 
 
-    public IndexModel(AppDbContext context)
+    public CreateQuestionnaire(AppDbContext context)
     {
         _context = context;
     }
-
-    public void OnGet()
+    
+    public async Task<IActionResult> OnPost()
     {
-        
+        return Page();
     }
 }

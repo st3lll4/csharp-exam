@@ -3,7 +3,6 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Pages;
 
@@ -11,10 +10,9 @@ public class ConfigureQuestion : PageModel
 {
     private readonly AppDbContext _context;
     [BindProperty(SupportsGet = true)] public string QuestionnaireTitle { get; set; } = default!;
-    public List<ConfigureQuestion> Questions { get; set; } = default!;
 
     [BindProperty(SupportsGet = true)] public string Name { get; set; } = default!;
-    [BindProperty(SupportsGet = true)] public EQuestionType Type { get; set; } = default!;
+    [BindProperty(SupportsGet = true)] public EQuestionType Type { get; set; }
     [BindProperty(SupportsGet = true)] public string OptionAmount { get; set; } = default!;
 
     public SelectList TypeSelectList { get; set; } = default!;
@@ -26,6 +24,7 @@ public class ConfigureQuestion : PageModel
 
     public void OnGet()
     {
+        QuestionnaireTitle = QuestionnaireTitle;
         var selectListData = new List<EQuestionType> 
         { 
             EQuestionType.Poll, 
@@ -35,13 +34,13 @@ public class ConfigureQuestion : PageModel
         TypeSelectList = new SelectList(selectListData);
     }
 
-    public IActionResult OnGetNext()
+    public IActionResult OnPost()
     {
         return RedirectToPage("SaveQuestion", new
         {
             questionnaireTitle = QuestionnaireTitle,
             type = Type,
-            options = OptionAmount
+            optionAmount = OptionAmount
         });
     }
 }

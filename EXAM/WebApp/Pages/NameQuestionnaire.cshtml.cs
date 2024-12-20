@@ -13,7 +13,7 @@ public class NameQuestionnaire : PageModel
         
     }
     
-    public IActionResult OnGetNext()
+    public IActionResult OnPost()
     {
         if (string.IsNullOrWhiteSpace(QuestionnaireTitle))
         {

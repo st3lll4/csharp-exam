@@ -1,19 +1,50 @@
 @page
 @model WebApp.Pages.SaveQuestion
 
-@{
-    Layout = null;
-}
+<div class="container-fluid mt-4">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">Question params</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-4">
+                    <label class="form-label">Question title:</label>
+                    <input type="text" asp-for="QuestionTitle" class="form-control" required>
+                </div>
 
-<!DOCTYPE html>
+                @for (var i = 0; i < Model.NumberOfOptions; i++)
+                {
+                    <div class="mb-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <label class="form-label">Answer option @(i + 1):</label>
+                                <input type="text" asp-for="AnswerTexts[i]" class="form-control" required>
+                            </div>
+                            @if (Model.IsMultipleChoice)
+                            {
+                                <div class="col-auto mt-4">
+                                    <div class="form-check">
+                                        <input type="radio" 
+                                               asp-for="CorrectAnswerIndex" 
+                                               value="@i" 
+                                               class="form-check-input" 
+                                               required>
+                                        <label class="form-check-label">Correct</label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
 
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<div>
-    
+                <div class="mt-4">
+                    <button type="submit" name="action" value="addmore" class="btn btn-dark">Save & Add Another Question</button>
+                    <button type="submit" name="action" value="finish" class="btn btn-success ms-2" style="background-color: #FFB6C1; border-color: #FFB6C1;">Save & Finish</button>
+                    <a href="/Index" class="btn btn-outline-dark ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+

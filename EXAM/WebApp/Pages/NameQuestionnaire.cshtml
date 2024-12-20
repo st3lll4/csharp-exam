@@ -2,9 +2,9 @@
 @model WebApp.Pages.NameQuestionnaire
 
 <div class="container-fluid">
-    <FORM method="post">
-        <p>name your questionaire:</p>
-        <input type="text" class="form-control"/>
+    <form method="get" asp-page-handler="Next">
+        <p>name your questionnaire:</p>
+        <input type="text" class="form-control" asp-for="QuestionnaireTitle"/>
         <button class="btn btn-primary">Next</button>
     </form>
 </div>

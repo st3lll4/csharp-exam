@@ -1,0 +1,13 @@
+@page
+@model WebApp.Pages.ConfigureQuestion
+
+<div class="container-fluid">
+    <form method="get" asp-page-handler="Next">
+        select question type
+        <select asp-for="Type" class="form-select mb-2"
+                asp-items="Model.TypeSelectList"></select>
+        how many answer options do you need?
+        <input type="number" asp-for="OptionAmount" class="form-control" min="2" max="10"/>
+        <button type="submit">Next</button>
+    </form>
+</div>

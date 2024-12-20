@@ -1,0 +1,66 @@
+@page
+@using Domain
+@model WebApp.Pages.Statistics
+
+<div class="container-fluid mt-4">
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Statistics: @Model.Questionnaire!.QuestionnaireName</h3>
+                <span class="badge bg-light text-dark">
+                    Total Responses: @Model.Questionnaire.QuestionnaireResponseCount
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            @foreach (var question in Model.Questionnaire.Questions!)
+            {
+                <div class="mb-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4>@question.QuestionTitle</h4>
+                        <span class="badge bg-dark">
+                            @question.QuestionResponseCount responses
+                        </span>
+                    </div>
+
+                    <div class="list-group">
+                        @foreach (var answer in question.Answers!)
+                        {
+                            var responsePercentage = question.QuestionResponseCount > 0 
+                                ? (answer.AnswerResponseCount * 100.0 / question.QuestionResponseCount) 
+                                : 0;
+                            
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <span class="@(answer.IsCorrect ? "text-success fw-bold" : "")">
+                                            @answer.AnswerTitle
+                                            @if (answer.IsCorrect && question.QuestionType == EQuestionType.MultipleChoice)
+                                            {
+                                                <i class="bi bi-check-circle-fill text-success ms-2"></i>
+                                            }
+                                        </span>
+                                    </div>
+                                    <span class="badge bg-secondary">
+                                        @answer.AnswerResponseCount responses
+                                    </span>
+                                </div>
+                                <div class="progress" style="height: 25px;">
+                                    <div class="progress-bar @(answer.IsCorrect ? "bg-success" : "bg-dark")" 
+                                         role="progressbar" 
+                                         style="width: @responsePercentage%">
+                                        @($"{responsePercentage:F1}%")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            
+            <div class="mt-4">
+                <a href="/Index" class="btn btn-outline-dark">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

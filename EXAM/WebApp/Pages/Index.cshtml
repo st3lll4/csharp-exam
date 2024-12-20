@@ -1,10 +1,48 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = "Quizzmaz";
 }
 
-@if (!string.IsNullOrWhiteSpace(Model.Message))
-{
-    <div class="alert alert-dark">@Model.Message</div>
-}
+<div class="container mt-4">
+    <h1 class="mb-4">Quizes and polls</h1>
+
+
+    <div class="search-form">
+        <form method="get" class="row g-3 align-items-center">
+            <div class="col-auto flex-grow-1">
+                <input type="text" asp-for="Search" class="form-control" placeholder="Search..."/>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-dark">Search</button>
+            </div>
+        </form>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model.Message
+        </div>
+    }
+
+    <ul class="business-list">
+        @foreach (var que in Model.Questionnaires)
+        {
+            <li class="business-item">
+                <a asp-page="/AnswerQuestions" asp-route-id="@que.Id" class="business-link">
+                    <strong>@que.QuestionnaireName</strong>
+                    <span class="registry-code ml-2">| Responses: @que.QuestionnaireResponseCount</span>
+                    <span class="registry-code ml-2">| Questions: @que.Questions!.Count</span>
+
+                </a>
+                <div class="btn-group" role="group">
+                    <a asp-page="/AnswerQuestions" asp-route-id="@que.Id" class="btn btn-dark">Answer</a>
+                    <a asp-page="/Statistics" asp-route-id="@que.Id" class="btn btn-outline-dark">
+                        <i class="bi bi-bar-chart-fill"></i> Statistics
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

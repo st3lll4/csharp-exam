@@ -9,6 +9,8 @@ public class Answer : BaseEntity
     public bool IsCorrect { get; set; }  = false; 
     public int AnswerResponseCount { get; set; } = 0; 
     
+    public int AnswerNumber { get; set; }
+    
     public int QuestionId { get; set; }
     public Question? Question { get; set; } 
 }
